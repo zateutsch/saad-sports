@@ -18,6 +18,7 @@ def home():
     }
 
     bet_result = "booyah"
+    results = []
 
     if request.method == 'POST':
         game_data = request.form
@@ -33,7 +34,7 @@ def home():
         print(game_data)
 
         if(quarter != 0): 
-            bet_result = BettingMachine.LiveBetSpread(quarter, time, awayscore, homescore, livespread, openspread)
+            bet_result, results = BettingMachine.LiveBetSpread(quarter, time, awayscore, homescore, livespread, openspread)
 
         print(bet_result)
         
