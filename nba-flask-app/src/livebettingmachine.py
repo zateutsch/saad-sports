@@ -1,24 +1,50 @@
-import src.NBADataAnalysisTools as tools, statistics as stat, os
+import NBADataAnalysisTools as tools, statistics as stat, os
 
 
 #abspath = os.path.abspath('./livebettingdata2')
-
-import data.livebettingdata2017 as lba2017
+try:
+    import livebettingdata2.livebettingdata2021 as lb21
+    print('2021 data imported')
+except:
+    print('2021 data import failed')
+    lb21 = []
+try:
+    import livebettingdata2.livebettingdata2020 as lb20
+    print('2020 data imported')
+except:
+    print('2020 data import failed')
+    lb20 = []
+import livebettingdata2.livebettingdata2019 as lb19
+print('2019 data imported')
+import livebettingdata2.livebettingdata2018 as lb18
+print('2018 data imported') 
+import livebettingdata2.livebettingdata2017 as lb17
 print('2017 data imported')
-import data.livebettingdata2016 as lba2016
+import livebettingdata2.livebettingdata2016 as lb16
 print('2016 data imported')
-import data.livebettingdata2015 as lba2015
+import livebettingdata2.livebettingdata2015 as lb15
 print('2015 data imported')
-import data.livebettingdata2014 as lba2014
+import livebettingdata2.livebettingdata2014 as lb14
 print('2014 data imported')
-import data.livebettingdata2013 as lba2013
+import livebettingdata2.livebettingdata2013 as lb13
 print('2013 data imported')
+import livebettingdata2.livebettingdata2012 as lb12
+print('2012 data imported')
+import livebettingdata2.livebettingdata2011 as lb11
+print('2011 data imported')
+import livebettingdata2.livebettingdata2010 as lb10
+print('2010 data imported')
 
 
-data = lba2013.data + lba2014.data + lba2015.data + lba2016.data + lba2017.data
 
 
-def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, openspread):
+
+
+
+data = lb20.data + lb21.data + lb13.data + lb14.data + lb15.data + lb16.data + lb17.data + lb12.data + lb11.data + lb10.data + lb18.data + lb19.data
+print(len(data))
+
+def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, openspread, openoverunder):
 
     
     similargameresults = []
@@ -39,7 +65,7 @@ def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, open
             spreaddif = float(spread) - openspread
             #print(spreaddif)
 
-            if abs(spreaddif) < 1.5:
+            if abs(spreaddif) < 2:
 
                 gameind= tools.findPlay(game['playbyplay'], quarter, time)
                 gameawayscore = game['playbyplay'][gameind]['awayscore']
@@ -50,7 +76,7 @@ def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, open
 
                 #print(abs(leaddif))
 
-                if abs(leaddif) <= 2:
+                if abs(leaddif) <2:
 
                     #print('made it here')
 
@@ -61,11 +87,12 @@ def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, open
                     #print('final spread: ' + finalspread)
                     similargameresults.append(finalspread)
         except Exception as e:
-            #print(e)
             failed += 1
             #print(game['month'] + '/' + game['day'] + '/' + game['year'])
             #print(game['awayteam'] + ' vs. ' + game['hometeam'])
-                            
+            
+            
+                                
 
 
     results = similargameresults
@@ -82,15 +109,42 @@ def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, open
 
     #print('Game results: ' + str(results))
 
-    #print('avg: ' + str(su/len(results)))
-    #print('med: ' + str(stat.median(results)))
+    print('avg: ' + str(su/len(results)))
+    print('med: ' + str(stat.median(results)))
 
-    #print('num results: ' + str(len(results)))
-    #print('probability the away team covers: ' + str(count/len(results)))
+    print('num results: ' + str(len(results)))
+    print('probability the away team covers: ' + str(count/len(results)))
+    print('probility the home team covers: ' + str(1-count/len(results)))
 
-    if(len(results) != 0):
-        return str(count/len(results))
-    else:
-        return ""
-    #print('failed: ' + str(failed))
+    print('failed: ' + str(failed))
+    probability = count/len(results)
 
+    return probability, results
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+            
+            
+
+            
+
+        
+    
+    

@@ -72,7 +72,7 @@ def findPlay(playbyplay, quarter, time):
 
     nearbyplayindex = findNearbyPlay(playbyplay, quarter, time)
 
-   
+    #print(nearbyplayindex)
     
 
 
@@ -143,9 +143,14 @@ def findNearbyPlay(playbyplay, quarter, time):
     count = 0
 
     while not found and count < 50:
+       # print('pt: ' + str(playtime))
+        
         count += 1
         #print(count)
+        #print(playbyplay[searchindex]['quarter'])
+        #print(playbyplay[searchindex]['time'])
         searchtime = convertTime(playbyplay[searchindex]['quarter'], playbyplay[searchindex]['time'])
+        #print('st: ' + str(searchtime))
         if playtime > searchtime - 60 and playtime < searchtime + 60:
             found = True
         elif playtime > searchtime:
@@ -158,7 +163,7 @@ def findNearbyPlay(playbyplay, quarter, time):
             uppersearchbound = tempind
     
         
-                
+        #print(searchindex)      
             
             
     
@@ -180,11 +185,6 @@ def getFinalScore(playbyplay):
 
 
 
-
-#print(convertTime(4, '11:00.7'))
-
-
-#games = getGameFiles('2016')
 
 #x = 0
 #while x < 20:
