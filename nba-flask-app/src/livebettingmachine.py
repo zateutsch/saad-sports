@@ -1,7 +1,17 @@
-import src.NBADataAnalysisTools as tools, statistics as stat, os
+import sys, os
+
+abspath = os.path.abspath('../')
+
+try:
+    sys.path.append(abspath)
+except:
+    pass
 
 
-#abspath = os.path.abspath('./livebettingdata2')
+import NBADataAnalysisTools as tools, statistics as stat, gameresultsplotter as plt
+
+
+
 try:
     import data.livebettingdata2021 as lb21
     print('2021 data imported')
@@ -122,6 +132,10 @@ def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, open
         probability = count/len(results)
 
     return probability, results
+
+
+
+
 
 
 
