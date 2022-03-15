@@ -173,6 +173,92 @@ def findNearbyPlay(playbyplay, quarter, time):
 
 
 
+def findPlay2(shortpbp, quarter, time):
+
+
+    closeindex = findNearbyPlay2(shortpbp, quarter, time)
+
+    targettime = convertTime(quarter, time)
+
+    searchtime = convertTime(shortpbp[closeindex][0], shortpbp[closeindex][1])
+    #print(closeindex)
+    #print(targettime)
+    
+    while searchtime <= targettime:
+        #print('searchtime: ' + str(searchtime))
+        if closeindex + 1 >= len(shortpbp):
+            return closeindex
+
+        nextplaytime = convertTime(shortpbp[closeindex + 1][0], shortpbp[closeindex][1])
+        if nextplaytime > targettime:
+            return closeindex
+        else:
+            closeindex += 1
+            searchtime = convertTime(shortpbp[closeindex][0],
+                                     shortpbp[closeindex][1])
+
+    while searchtime > targettime:
+        #print('searchtime: ' + str(searchtime))
+        if closeindex -1 <= 0:
+            return closeindex
+        prevplaytime = convertTime(shortpbp[closeindex -1][0],
+                                  shortpbp[closeindex -1][1])
+        #print(prevplaytime)
+        if prevplaytime <= targettime:
+            tbr = closeindex -1
+            #print('tbr: ' + str(closeindex - 1))
+            return tbr
+        else:
+            closeindex -= 1
+            searchtime = convertTime(shortpbp[closeindex][0],
+                                     shortpbp[closeindex][1])
+            
+            
+            
+    
+    
+
+
+
+def findNearbyPlay2(shortpbp, quarter, time):
+
+    targettime = convertTime(quarter, time)
+    uppersearchbound = len(shortpbp)
+    lowersearchbound = 0
+
+    searchindex = int(uppersearchbound/2)
+
+    found = False
+    count = 0
+
+    while not found and count < 20:
+        count +=1
+        searchtime = convertTime(shortpbp[searchindex][0],
+                                 shortpbp[searchindex][1])
+        #print('search: ' + str(searchtime))
+        #print('target: ' + str(targettime))
+        if abs(searchtime - targettime) < 60:
+            found = True
+
+        elif targettime > searchtime:
+            #print(searchindex)
+            lowersearchbound = searchindex
+            searchindex = int((uppersearchbound + lowersearchbound)/2)
+
+            #print('usb: ' + str(uppersearchbound))
+            #print('lsb: ' + str(lowersearchbound))
+            #print(searchindex)
+
+        else:
+            
+            uppersearchbound = searchindex
+            searchindex = int((uppersearchbound + lowersearchbound)/2)
+ 
+        
+    return searchindex
+
+
+
 
 def getFinalScore(playbyplay):
 
@@ -181,7 +267,20 @@ def getFinalScore(playbyplay):
     homefinal = playbyplay[endindex]['homescore']
     return [awayfinal, homefinal]
 
+
+def getFinalScore2(shortpbp):
+
+    endindex = len(shortpbp) - 1
+    awayfinal = shortpbp[endindex][2]
+    homefinal = shortpbp[endindex][3]
+
+    return awayfinal, homefinal
         
+
+
+
+
+
 
 
 
