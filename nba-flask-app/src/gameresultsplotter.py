@@ -71,7 +71,6 @@ def getOdds(results):
             if result > spread:
                 count +=1
         try:
-
             odds = probabilityToOdds(count/length)
 
             oddslist.append([spread, odds])

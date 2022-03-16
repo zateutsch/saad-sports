@@ -1,3 +1,4 @@
 nba-flask-app/data/**
 nba-flask-app/*.png
 nba-flask-app/*.DS_STORE
+*.pyc
