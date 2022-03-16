@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/styles.css">
+    </head>
+    <body style="text-align: center;">
+        <h1>NBA Spread Prediction</h1>
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <div class="sectionDiv">
+                <div class="inputDiv">
+                    <span> Quarter </span>
+                    <input type="number" min="1" max="4" name="quarter" value={{ data["quarter"] }} > 
+                </div>
+                <div class="inputDiv">
+                    <span> Time Remaining </span>
+                    <input type="number" min="0" max="12" name="minutes" value={{ data["minutes"] }}> 
+                    <span>:</span>
+                    <input type="number" min="0" max="50" step="10" name="seconds" value={{ data["seconds"] }}>
+                </div>        
+            </div>
+            <div class="sectionDiv">
+                <div class="inputDiv">
+                    <span> Away Score </span>
+                    <input type="number" min="0" max="150" name="awayscore" value={{ data["awayscore"] }} > 
+                </div>
+                <div class="inputDiv">
+                    <span> Home Score </span>
+                    <input type="number" min="0" max="150" name="homescore" value={{ data["homescore"] }} > 
+                </div>
+            </div>
+            <div class="sectionDiv">
+                <div class="inputDiv">
+                    <span> Live Spread </span>
+                    <input type="number" min="-100" max="100" step=".5" name="livespread" value={{ data["livespread"] }} > 
+                </div>
+                <div class="inputDiv">
+                    <span> Open Spread </span>
+                    <input type="number" min="-100" max="100" step=".5" name="openspread" value={{ data["openspread"] }} > 
+                </div>
+            </div>
+            <div class="sectionDiv">
+                <div class="inputDiv">
+                    <input type="submit" value="Calculate">
+                </div>
+            </div>
+        </form>
+
+        <h1>{{ result }}</h1>
+        <h1>{{ count }}</h1>
+    </body>
+</html>
