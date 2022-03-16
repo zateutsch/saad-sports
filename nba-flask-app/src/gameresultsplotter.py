@@ -1,40 +1,30 @@
-import sys,  matplotlib.pyplot as plt,  numpy as np,  matplotlib.colors, os, statistics as stat
+import matplotlib.pyplot as plt  
+import numpy as np
+import os
+import statistics as stat
 import time
-#import livebettingmachine
-
-#import scipy.stats.norm
-
-
 
 rootdir = os.path.abspath('.')
-#print(rootdir)
 
-#input: array of game results
-#output: location of histogram plot of those gameresults
+# input: array of game results, i.e. from LiveBetSpread()
+# Saves histogram of results to photos/ directory
+# returns: relative path to histogram (string)
 
 def plotGames(results):
     t = time.localtime()
     current_time = time.strftime('%H:%M:%S', t)
-    
-
-
-
     
     try:
         os.makedirs(rootdir + '/photos')
     except FileExistsError:
         pass
 
-
     sigma = stat.stdev(results)
-
     mu = stat.mean(results)
-    
     
     n, bins, patches = plt.hist(results, 20,
                                 density = 1,
                                 color = 'green', alpha = .7)
-
 
     y = ((1 / (np.sqrt(2 * np.pi) * sigma)) *
      np.exp(-0.5 * (1 / sigma * (bins - mu))**2))
@@ -43,7 +33,6 @@ def plotGames(results):
     plt.xlabel('Game result')
 
     plt.ylabel('Percentage of Total Games')
-
     
     dirs = rootdir + '/photos/fig' + current_time + '.png'
 
@@ -51,18 +40,12 @@ def plotGames(results):
 
     plt.close()
 
-    
-
     return(dirs)
 
 
-#input: list of game results
-
+# input: list of game results
 # output: implied odds for spreads ranging from 0 to 2 times the median
 # e.g ([0, odds], [1.5, odds], [2.5, odds], ... [10.5, odds]]
-
-
-
 
 def getOdds(results):
     length = len(results)
@@ -77,7 +60,6 @@ def getOdds(results):
     if med < 0:
         checklist = [-y for y in checklist]
         
-
     print(checklist)
 
     oddslist = []
@@ -96,44 +78,11 @@ def getOdds(results):
         except:
             pass
 
-    return oddslist        
-        
-        
-        
+    return oddslist          
 
-    
-        
-    
- 
-    
-
-
-
-def probabilityToOdds(x):
-
-    
-
+def probabilityToOdds(x):  
     if x <= .5:
         return '+' + str(int(100*(1-x)/x))
 
     if x > .5:
-
         return str(int(-100* x/(1-x)))
-
-
-
-
-
-
-    
-    
-    
-    
-
-
-
-#prob, results = lbm.LiveBetSpread(1, '6:40.0', 3, 0 ,  -1.5, -4.5, 205)
-
-
-#plotGames(results)
-

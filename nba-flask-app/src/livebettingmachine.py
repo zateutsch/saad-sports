@@ -1,4 +1,6 @@
 import sys, os
+import statistics as stat
+import src.NBADataAnalysisTools as tools
 
 abspath = os.path.abspath('../')
 
@@ -7,25 +9,16 @@ try:
 except:
     pass
 
-
-import NBADataAnalysisTools as tools, statistics as stat, gameresultsplotter as plt
-
 import data.livebettingdata as lbd
 
 data = lbd.data
 
-def LiveBetSpread(quarter, time,  livelead, livespread, openspread):
-
-    
+def LiveBetSpread(quarter, time,  livelead, livespread, openspread): 
     similargameresults = []
     failed = 0
     for game in data:
 
         try:
-           
-
-            #oudif = float(game['overunder']) - openoverunder
-            #print(oudif)
     
             spread = game['sp']
 
@@ -33,7 +26,6 @@ def LiveBetSpread(quarter, time,  livelead, livespread, openspread):
                 spread = 0
                 
             spreaddif = float(spread) - openspread
-            #print('spread dif: ' + str(spreaddif))
 
             if abs(spreaddif) < 2:
 
@@ -44,42 +36,23 @@ def LiveBetSpread(quarter, time,  livelead, livespread, openspread):
 
                 leaddif = gamelead - livelead
 
-                #print('lead dif: ' + str(abs(leaddif)))
-
                 if abs(leaddif) < 2:
-
-                    #print('made it here')
-
-                
                     finalaway, finalhome = tools.getFinalScore2(game['pbp'])
-                    #print('final: ' + str(finalscore))
                     finalspread = finalaway - finalhome
-                    #print('final spread: ' + finalspread)
-                    similargameresults.append(finalspread)
+                    similargameresults.append(finalspread)             
         except Exception as e:
             failed += 1
-            #print(e)
-            #print(game['mnth'] + '/' + game['dy'] + '/' + game['yr'])
-            #print(game['away'] + ' vs. ' + game['home'])
             
-            
-            
-                                
-
-
     results = similargameresults
-
 
     su = 0
     count = 0
 
     for result in results:
         su += result
-        #print(result)
         if result > livespread:
             count += 1
 
-    #print('Game results: ' + str(results))
     results_count = len(results)
     probability = -1.0
     if(results_count > 0):
@@ -95,47 +68,4 @@ def LiveBetSpread(quarter, time,  livelead, livespread, openspread):
 
     return probability, results
 
-
-
-
-
-
-
-
-#p, res = LiveBetSpread(1, '7:10.0', 5, 0, 4.5, 3.5)
-
-
 LiveBetSpread(2,'5:00.0', 4, 5.5, 11.5)
-
-
-#warriors -11
-#bucks +1.5
-#bulls -5
-#raptors -6.5
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-            
-            
-
-            
-
-        
-    
-    
