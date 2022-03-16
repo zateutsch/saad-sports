@@ -14,7 +14,7 @@ import data.livebettingdata as lbd
 
 data = lbd.data
 
-def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, openspread):
+def LiveBetSpread(quarter, time,  livelead, livespread, openspread):
 
     
     similargameresults = []
@@ -41,7 +41,7 @@ def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, open
                 gameawayscore = game['pbp'][gameind][2]
                 gamehomescore = game['pbp'][gameind][3]
                 gamelead = gameawayscore - gamehomescore
-                livelead = liveawayscore - livehomescore
+
                 leaddif = gamelead - livelead
 
                 #print('lead dif: ' + str(abs(leaddif)))
@@ -105,7 +105,7 @@ def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, open
 #p, res = LiveBetSpread(1, '7:10.0', 5, 0, 4.5, 3.5)
 
 
-#LiveBetSpread(2,'5:00.0', 0, 4, 5.5, 11.5)
+LiveBetSpread(2,'5:00.0', 4, 5.5, 11.5)
 
 
 #warriors -11
@@ -116,8 +116,6 @@ def LiveBetSpread(quarter, time,  liveawayscore, livehomescore, livespread, open
 
 
 
-
-LiveBetSpread(2, '1:43.0', 0, 2, 5, 5)
 
 
 
