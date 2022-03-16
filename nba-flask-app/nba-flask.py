@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import src.livebettingmachine as BettingMachine
+import src.livebettingmachine as BettingMachine, os
 app = Flask(__name__)
 
 
@@ -40,4 +40,5 @@ def home():
     return render_template("index.html", data=game_data, result=bet_result, count=len(results))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host=os.getenv('IP', '0.0.0.0'), 
+        port=int(os.getenv('PORT', 4444)))

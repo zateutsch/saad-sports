@@ -1,6 +1,6 @@
 import sys, os
 import statistics as stat
-import src.NBADataAnalysisTools as tools
+
 
 abspath = os.path.abspath('../')
 
@@ -8,6 +8,10 @@ try:
     sys.path.append(abspath)
 except:
     pass
+
+
+import src.NBADataAnalysisTools as tools
+
 
 import data.livebettingdata as lbd
 
@@ -68,4 +72,3 @@ def LiveBetSpread(quarter, time,  livelead, livespread, openspread):
 
     return probability, results
 
-LiveBetSpread(2,'5:00.0', 4, 5.5, 11.5)
