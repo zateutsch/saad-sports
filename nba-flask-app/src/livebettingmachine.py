@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, shelve
 import statistics as stat
 
 
@@ -15,7 +15,10 @@ import src.NBADataAnalysisTools as tools
 
 import data.livebettingdata as lbd
 
-data = lbd.data
+shelffile = shelve.open(abspath + '/data/livebettingdata')
+
+data = shelffile['data']
+
 
 def LiveBetSpread(quarter, time,  livelead, livespread, openspread): 
     similargameresults = []
@@ -71,4 +74,8 @@ def LiveBetSpread(quarter, time,  livelead, livespread, openspread):
         probability = count/len(results)
 
     return probability, results
+
+
+
+LiveBetSpread(1, '4:34.0', 3, .5, 1.5)
 
