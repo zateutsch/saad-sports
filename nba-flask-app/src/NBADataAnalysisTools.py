@@ -275,20 +275,54 @@ def getFinalScore2(shortpbp):
     homefinal = shortpbp[endindex][3]
 
     return awayfinal, homefinal
+
+
+def getScoreAtEndOfQuarters(shortpbp):
+
+    quarter1found = False
+    quarter2found = False
+    quarter3found = False
+    quarter1score = []
+    quarter2score = []
+    quarter3score = []
+
+    for i in range(0, len(shortpbp)):
+        if quarter1found == False and shortpbp[i][0] > 1 :
+            q1awayscore = shortpbp[i-1][2]
+            q1homescore = shortpbp[i-1][3]
+            quarter1score = [q1awayscore, q1homescore]
+            quarter1found = True
+
+
+        if  quarter2found == False and shortpbp[i][0] > 2:
+            quarter2found = True
+            q2awayscore = shortpbp[i-1][2]
+            q2homescore = shortpbp[i-1][3]
+            quarter2score = [q2awayscore, q2homescore]
+
+        if quarter3found == False and shortpbp[i][0] > 3:
+            quarter3found = True
+            q3awayscore = shortpbp[i-1][2]
+            q3homescore = shortpbp[i-1][3]
+            quarter3score = [q3awayscore, q3homescore]
+            
+
+            
+    return quarter1score, quarter2score, quarter3score
+         
+                        
+            
+        
+
+    
+
+
+    
         
 
 
 
 
-
-
-
-
-
-#x = 0
-#while x < 20:
- #   print(games[x])
-   # x = x +1
                 
                         
                         
