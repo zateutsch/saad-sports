@@ -98,25 +98,35 @@ def findSimilarGames(quarter, time, livelead, openspread, spsearchparameter, lea
 
             if abs(spreaddif) < spsearchparameter:
 
-                gameind = tools.findPlay2(game['pbp'], quarter, time)
-                gameawayscore = game['pbp'][gameind][2]
-                gamehomescore = game['pbp'][gameind][3]
-                gamelead = gameawayscore - gamehomescore
+                #gameind = tools.findPlay2(game['pbp'], quarter, time)
+               # gameawayscore = game['pbp'][gameind][2]
+                #gamehomescore = game['pbp'][gameind][3]
+                #gamelead = gameawayscore - gamehomescore
 
-                leaddif = gamelead - livelead
+                #leaddif = gamelead - livelead
 
-                if abs(leaddif) < leadsearchparameter:
+                matchy, play = tools.findScoreMatch(game['pbp'], quarter, time, livelead)
+
+                if matchy == True:
                     #finalaway, finalhome = tools.getFinalScore2(game['pbp'])
                     #finalspread = finalaway - finalhome
                     similargames.append(game)             
         except Exception as e:
+            #print(e)
             failed +=1
             
     print('failed: ' + str(failed))
     return similargames
+
+
+
+
+
+    
+    
             
 
 
-#LiveBetSpread(1, '12:00.0', 0, 0, 0)
+LiveBetSpread(3, '0:00.0', 4, 1.5, -3.5)
 
 

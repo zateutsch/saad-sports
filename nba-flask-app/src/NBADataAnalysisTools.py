@@ -315,6 +315,54 @@ def getScoreAtEndOfQuarters(shortpbp):
         
 
     
+def findScoreMatch(shortpbp, quarter, time, targetscore):
+
+    nearbyindex = findNearbyPlay2(shortpbp, quarter, time)
+
+    searchtime = convertTime(quarter, time)
+    
+    index = nearbyindex
+    #play = shortpbp[index]
+
+    inbounds = True
+    
+    while inbounds and abs(convertTime(shortpbp[index][0], shortpbp[index][1]) - searchtime) < 100:
+        scoredif = shortpbp[index][2] - shortpbp[index][3]
+        if scoredif == targetscore:
+            return True, shortpbp[index]
+
+        index +=1
+        if index >= len(shortpbp):
+            inbounds = False
+        
+
+
+    index = nearbyindex
+    #play = shortpbp[index]
+    inbounds = True
+    while inbounds and abs(convertTime(shortpbp[index][0], shortpbp[index][1]) - searchtime) < 100 :
+        scoredif = shortpbp[index][2] - shortpbp[index][3]
+        if scoredif == targetscore:
+            return True, shortpbp[index]
+
+        index -=1
+        
+        if index < 0:
+            inbounds = False
+            
+  
+
+
+    return False, ''
+
+
+        
+
+        
+    
+    
+
+    
 
 
     
