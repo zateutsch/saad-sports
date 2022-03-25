@@ -315,7 +315,7 @@ def getScoreAtEndOfQuarters(shortpbp):
         
 
     
-def findScoreMatch(shortpbp, quarter, time, targetscore):
+def findScoreMatch(shortpbp, quarter, time, targetscore, possession):
 
     nearbyindex = findNearbyPlay2(shortpbp, quarter, time)
 
@@ -326,9 +326,10 @@ def findScoreMatch(shortpbp, quarter, time, targetscore):
 
     inbounds = True
     
-    while inbounds and abs(convertTime(shortpbp[index][0], shortpbp[index][1]) - searchtime) < 100:
-        scoredif = shortpbp[index][2] - shortpbp[index][3]
-        if scoredif == targetscore:
+    while inbounds and abs(convertTime(shortpbp[index][0], shortpbp[index][1]) - searchtime) < 120:
+
+        scoredif = int(shortpbp[index][2]) - int(shortpbp[index][3])
+        if scoredif == targetscore and shortpbp[index][4] == possession:
             return True, shortpbp[index]
 
         index +=1
@@ -340,9 +341,11 @@ def findScoreMatch(shortpbp, quarter, time, targetscore):
     index = nearbyindex
     #play = shortpbp[index]
     inbounds = True
-    while inbounds and abs(convertTime(shortpbp[index][0], shortpbp[index][1]) - searchtime) < 100 :
-        scoredif = shortpbp[index][2] - shortpbp[index][3]
-        if scoredif == targetscore:
+    while inbounds and abs(convertTime(shortpbp[index][0], shortpbp[index][1]) - searchtime) < 120 :
+        
+       
+        scoredif = int(shortpbp[index][2]) - int(shortpbp[index][3])
+        if scoredif == targetscore and shortpbp[index][4] == possession:
             return True, shortpbp[index]
 
         index -=1

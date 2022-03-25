@@ -12,7 +12,6 @@ import statistics as stat
 
 
 abspath = os.path.abspath('./')
-print(abspath)
 try:
     sys.path.append(abspath)
 except:
@@ -24,14 +23,19 @@ import src.NBADataAnalysisTools as tools
 
 #import data.livebettingdata as lbd
 
-shelffile = shelve.open(abspath + '/data/livebettingdata')
+s1012 = shelve.open(abspath + '/data/livebettingdata10-12')
+s1315 = shelve.open(abspath + '/data/livebettingdata13-15')
+s1618 = shelve.open(abspath + '/data/livebettingdata16-18')
+s1922 = shelve.open(abspath + '/data/livebettingdata19-22')
 
-data = shelffile['data']
+
+data = s1012['data'] + s1315['data'] + s1618['data'] + s1922['data']
 
 
-def LiveBetSpread(quarter, time,  livelead, livespread, openspread): 
+print(len(data))
+def LiveBetSpread(quarter, time,  livelead, livespread, openspread, possession): 
     
-    similargames = findSimilarGames(quarter, time, livelead, openspread, 2, 2)
+    similargames = findSimilarGames(quarter, time, livelead, openspread, 2, possession)
 
     results = []
     q1results = []
@@ -41,13 +45,13 @@ def LiveBetSpread(quarter, time,  livelead, livespread, openspread):
 
     for game in similargames:
         awayfinal, homefinal = tools.getFinalScore2(game['pbp'])
-        result = awayfinal - homefinal
+        result = int(awayfinal) - int(homefinal)
         results.append(result)
             
         q1score, q2score, q3score = tools.getScoreAtEndOfQuarters(game['pbp'])            
-        q1results.append(q1score[0] - q1score[1])
-        q2results.append(q2score[0] - q2score[1])
-        q3results.append(q3score[0] - q3score[1])
+        q1results.append(int(q1score[0]) - int(q1score[1]))
+        q2results.append(int(q2score[0]) - int(q2score[1]))
+        q3results.append(int(q3score[0]) - int(q3score[1]))
 
         
 
@@ -80,7 +84,7 @@ def LiveBetSpread(quarter, time,  livelead, livespread, openspread):
 
 
 
-def findSimilarGames(quarter, time, livelead, openspread, spsearchparameter, leadsearchparameter):
+def findSimilarGames(quarter, time, livelead, openspread, spsearchparameter, possession):
 
     failed = 0
     similargames = []
@@ -91,7 +95,7 @@ def findSimilarGames(quarter, time, livelead, openspread, spsearchparameter, lea
     
             spread = game['sp']
 
-            if spread == 'PK':
+            if spread == 'PK' or spread == 'pk':
                 spread = 0
                 
             spreaddif = float(spread) - openspread
@@ -105,14 +109,13 @@ def findSimilarGames(quarter, time, livelead, openspread, spsearchparameter, lea
 
                 #leaddif = gamelead - livelead
 
-                matchy, play = tools.findScoreMatch(game['pbp'], quarter, time, livelead)
+                matchy, play = tools.findScoreMatch(game['pbp'], quarter, time, livelead, possession)
 
                 if matchy == True:
                     #finalaway, finalhome = tools.getFinalScore2(game['pbp'])
                     #finalspread = finalaway - finalhome
                     similargames.append(game)             
         except Exception as e:
-            #print(e)
             failed +=1
             
     print('failed: ' + str(failed))
@@ -127,6 +130,6 @@ def findSimilarGames(quarter, time, livelead, openspread, spsearchparameter, lea
             
 
 
-LiveBetSpread(3, '0:00.0', 4, 1.5, -3.5)
+LiveBetSpread(1, '4:20.0', 0, -3.5, -3.5, 1)
 
 
