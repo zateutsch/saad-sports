@@ -18,7 +18,7 @@ except:
     pass
 
 
-import src.NBADataAnalysisTools as tools
+import src.enginetools as tools
 
 
 #import data.livebettingdata as lbd
@@ -33,9 +33,9 @@ data = s1012['data'] + s1315['data'] + s1618['data'] + s1922['data']
 
 
 print(len(data))
-def LiveBetSpread(quarter, time,  livelead, livespread, openspread, possession): 
+def LiveBetSpread(quarter, time,  livelead, livespread, openspread, openoverunder,  possession): 
     
-    similargames = findSimilarGames(quarter, time, livelead, openspread, 2, possession)
+    similargames = findSimilarGames(quarter, time, livelead, openspread, openoverunder, 2, 50,  possession)
 
     results = []
     q1results = []
@@ -84,7 +84,7 @@ def LiveBetSpread(quarter, time,  livelead, livespread, openspread, possession):
 
 
 
-def findSimilarGames(quarter, time, livelead, openspread, spsearchparameter, possession):
+def findSimilarGames(quarter, time, livelead, openspread, openoverunder, spsearchparameter, overunderparameter, possession):
 
     failed = 0
     similargames = []
@@ -97,10 +97,13 @@ def findSimilarGames(quarter, time, livelead, openspread, spsearchparameter, pos
 
             if spread == 'PK' or spread == 'pk':
                 spread = 0
-                
-            spreaddif = float(spread) - openspread
 
-            if abs(spreaddif) < spsearchparameter:
+            ou = game['ou']
+                
+            spreaddif = abs(float(spread) - openspread)
+            oudif = abs(float(ou) - openoverunder)
+
+            if spreaddif < spsearchparameter and oudif < overunderparameter:
 
                 #gameind = tools.findPlay2(game['pbp'], quarter, time)
                # gameawayscore = game['pbp'][gameind][2]
@@ -125,11 +128,14 @@ def findSimilarGames(quarter, time, livelead, openspread, spsearchparameter, pos
 
 
 
-    
+ 
     
             
 
+LiveBetSpread(1, '0:00.0', 16, 14.5, 5, 218.5, -1)
+#LiveBetSpread(1, '4:20.0', 6, 0, -3.5, 205, 1)
 
-LiveBetSpread(1, '4:20.0', 0, -3.5, -3.5, 1)
+
+
 
 
