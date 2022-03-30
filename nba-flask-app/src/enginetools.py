@@ -45,8 +45,6 @@ def getGameFiles(year):
     return games
 
 
-
-
 #DOMAIN (quarter as int, time as mm:ss.s)
 #RANGE seconds played
 
